@@ -64,6 +64,15 @@ void Program::Update() {
         Projectile::CleanProjectiles();
         Projectile::ProjectileCollision();
     }
+
+    if(Enemy:: Scoretotal >= bonuslifesindecator){
+        if(lives <5){
+            lives++;
+            bonuslifesindecator+=1000;
+        }else{
+            bonuslifesindecator+=1000;
+        }  
+    }
 }
 
 void Program::Draw() {
@@ -84,12 +93,13 @@ void Program::Draw() {
     if (startup) DrawStartup();
     if (paused) DrawPauseScreen();
     if (gameOver) DrawGameOver();
+    if(!startup || paused || gameOver) DrawScore();
 }
 
 void Program::ManageEnemyRespawns() {
     delay = std::max(delay - 1, 0);
 
-    respawnCooldown -= 1;
+    respawnCooldown = respawnCooldown - 1 - (Enemy:: Scoretotal/1000);
     if (respawnCooldown <= 0) {
         respawnCooldown = 1080;
         for (std::pair<std::pair<float, float>, Enemy*>& p : Enemy::enemies) {
@@ -147,11 +157,16 @@ void Program::DrawGameOver() {
     DrawText("Press Enter", (GetScreenWidth() / 2) - 75, GetScreenHeight() / 2, 24, GRAY);
 }
 
+void Program::DrawScore(){
+    DrawText(TextFormat("Score: %d", Enemy::Scoretotal), 40, 30, 30, WHITE);
+}
+
 void Program::KeyInputs() {
     if ((!gameOver && !startup && IsKeyPressed('P')) || (paused && IsKeyPressed(KEY_ENTER))) paused = !paused;
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
+    if(IsKeyPressed('K')) Enemy:: Scoretotal +=500;
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
