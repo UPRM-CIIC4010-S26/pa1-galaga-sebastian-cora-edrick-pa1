@@ -56,7 +56,19 @@ void Program::Update() {
         }
 
         for (Projectile& p : Projectile::projectiles) { 
-            p.update(); 
+            p.update();
+            if(HitBox::Collision(player->hitBox, p.getHitBox()) && p.ID ==1){
+                Animation::animations.push_back(
+                    Animation(player->position.first, player->position.second, 16, 0, 33, 34, 30 ,30, 3, ImageManager::SpriteSheet)
+                );
+
+                PlaySound(SoundManager::gameOver);
+                Projectile::projectiles.clear();
+                player->position.first = GetScreenWidth() / 2 - 15;
+                p.del = true;
+                pauseFrames = 120;
+                lives--;
+            } 
 
         }
 
@@ -187,4 +199,13 @@ void Program::Reset() {
     count = 0;
     delay = 0;
     lives = 3;
+
+    Enemy::enemies.push_back({{350, 150}, new SpEnemy(350,150)});
+        Enemy::enemies.push_back({{600, 150}, new SpEnemy(600,150)});
+        for (int i = 0; i < 30; i++) {
+            float x = 250 + 50 * (i%10);
+            float y = 200 + 50 * (i/10);
+
+            Enemy::enemies.push_back({{x, y}, new StdEnemy(x,y)});
+        }
 }
