@@ -11,8 +11,8 @@ Don't forget that you must also fill out an evaluation form in Moodle to conside
 
 ## Grading
 
-(STUDENT NUMBER HERE) (STUDENT NAME HERE) (STUDENT EMAIL HERE)
-(STUDENT NUMBER HERE) (STUDENT NAME HERE) (STUDENT EMAIL HERE)
+(802218446) (Sebastian Cora Ortiz) (sebastian.cora@upr.edu)
+(STUDENT NUMBER HERE) (Edrick S. Lopez Baez) (edrick.lopez3@upr.edu)
 
 Any project that doesn't compile will receive a 0.
 
