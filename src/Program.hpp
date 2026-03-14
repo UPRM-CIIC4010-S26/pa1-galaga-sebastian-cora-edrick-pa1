@@ -36,6 +36,10 @@ class Program {
         void KeyInputs();
         void PlayerReset();
         void Reset();
+        void DrawScore();
           
         ~Program() {}
+
+        int score;
+        int bonuslifesindecator=1000;
 };
